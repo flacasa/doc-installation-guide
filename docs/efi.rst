@@ -16,6 +16,8 @@ If after installing Linux Mint in EFI mode, you are unable to boot due to a ``Se
 
 * Disable ``SecureBoot`` in the ``BIOS`` settings of your computer.
 
+  See `here <http://www.rodsbooks.com/efi-bootloaders/secureboot.html>`_ for examples of how to disable secure boot on various computers.
+
 EFI boot order
 --------------
 
@@ -59,3 +61,21 @@ In the screenshot above, ``sudo efibootmgr --bootorder 0000,0081`` instructs the
 
 .. note::
     In the screenshot above ``0000`` is the first boot option so the computer boots on the Linux Mint grub menu. If grub fails (or if it is dismissed with the ``exit`` command), the computer follows the boot order and then tries to boot ``0081``, which corresponds to Mac OS.
+
+Further troubleshooting for PCs
+-------------------------------
+
+If your computer boots straight into windows, try the following solutions:
+
+* In the BIOS settings of your computer, place the entry ``ubuntu`` at the top of the boot order
+* From windows:
+
+    * Use `EasyUEFI <https://www.easyuefi.com/index-us.html>`_ to adjust the boot order, placing ``ubuntu`` at the top
+    * From an administrative command prompt, use `bcdedit <https://itsfoss.com/no-grub-windows-linux>`_ to adjust the boot priority:
+
+        ``bcdedit /set {bootmgr} path \EFI\ubuntu\shimx64.efi``
+
+Some computer brands have particular issues requiring specific workarounds:
+
+* Acer computers: `select shim as trusted for executing <https://itsfoss.com/no-bootable-device-found-ubuntu>`_
+* HP computers: `make fake windows boot files <https://forums.linuxmint.com/viewtopic.php?f=42&t=243338&p=1300722>`_
